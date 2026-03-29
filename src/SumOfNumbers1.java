@@ -18,3 +18,4 @@ public class SumOfNumbers1 {
         System.out.println(sum(List.of(1,2,4,6,7,3)));
     }
 }
+
