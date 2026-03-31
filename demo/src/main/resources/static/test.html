@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Guess Game Test</title>
+</head>
+<body>
+<h1>Guess Game Test</h1>
+
+<button onclick="createGame()">Create Game</button>
+<p>Game ID: <span id="gameId"></span></p>
+
+<input type="number" id="guessNumber" min="1" max="100" placeholder="Enter number" />
+<button onclick="guessNumber()">Guess</button>
+
+<p>Result: <span id="result"></span></p>
+
+<script>
+    async function createGame() {
+        const response = await fetch('/game');
+        const gameId = await response.text();
+        document.getElementById('gameId').textContent = gameId;
+        document.getElementById('result').textContent = '';
+    }
+
+    async function guessNumber() {
+        const gameId = document.getElementById('gameId').textContent.trim();
+        const number = document.getElementById('guessNumber').value;
+
+        if (!gameId) {
+            document.getElementById('result').textContent = 'Create a game first';
+            return;
+        }
+
+        const response = await fetch(`/game/${gameId}/guess/${number}`);
+        const result = await response.text();
+        document.getElementById('result').textContent = result;
+    }
+</script>
+</body>
+</html>
